@@ -1,58 +1,46 @@
-import java.util.Scanner;
+import java.io.*;
 
 public class Main {
-	public static void main(String[] args){
-		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Podaj imie:");
-		String name = scanner.next();
+  public static double average(int[] marks) {
+    int sum = 0;
+    for(int i = 0; i < marks.length; i++) {
+        sum += marks[i];
+    }
+    return sum / (double)marks.length;
+  }
 
-		System.out.println("Podaj nazwisko:");
-		String surname = scanner.next();
+  public static int max(int[] marks) {
+    int highestGrade = marks[0];
+    for(int i = 1; i < marks.length; i++) {
+        if (highestGrade < marks[i]) {
+          highestGrade = marks[i];
+        }
+    }
+    return highestGrade;
+  }
 
-		System.out.println("Podaj telefon:");
-		String tel = scanner.next();
+  public static void main(String[] args) {
+    try {
+      BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-		System.out.println("Podaj miasto:");
-		String city = scanner.next();
+      int grades_size;
+      System.out.println("Podaj liczbę ocen ucznia: ");
+      grades_size = Integer.parseInt(in.readLine());
 
-		String firstLine = "* " + name + " " + surname + " ";
-		String lastLine = "* tel. " + tel + " adres: " + city + " ";
-		int frameLength = lastLine.length() > firstLine.length() ? lastLine.length() + 1 : firstLine.length() + 1;
+      if (grades_size < 1) {
+        System.out.println("Brak ocen!");
+        return;
+      }
 
-		StringBuilder frame = new StringBuilder();
-		for (int i = 0; i < frameLength; i++) {
-			frame.append("*");
-		}
-
-		String rigthFrame = "*";
-		int fnumber;
-		int snumber;
-
-		if (lastLine.length() > firstLine.length()) {
-			fnumber = lastLine.length() - firstLine.length();
-			snumber = 0;
-		}  else if (firstLine.length() > lastLine.length()) {
-			snumber = firstLine.length() - lastLine.length();
-			fnumber = 0;
-		} else {
-			fnumber = 0;
-			snumber = 0;
-		}
-
-		StringBuilder xf = new StringBuilder();
-		for (int i = 0; i < fnumber; i++) {
-			xf.append(" ");
-		}
-
-		StringBuilder xs = new StringBuilder();
-		for (int i = 0; i < snumber; i++) {
-			xs.append(" ");
-		}
-
-		System.out.println(frame);
-		System.out.println(firstLine + xf + rigthFrame);
-		System.out.println(lastLine + xs + rigthFrame);
-		System.out.println(frame);
-	}
+      int[] grades = new int[grades_size];
+      System.out.println("Wypisz kolejno oceny (rozdzielajac enterem): ");
+      for(int i = 0; i < grades_size; i++) {
+        grades[i] = Integer.parseInt(in.readLine());
+      }
+      System.out.println("Średnia ocen: " + average(grades));
+      System.out.println("Najwyższa ocena to: " + max(grades));
+    } catch (IOException e) {
+    }
+  }
 }
